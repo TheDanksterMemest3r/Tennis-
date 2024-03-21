@@ -18,58 +18,69 @@ class TennisGame6:
 
         if (self.player1Score == self.player2Score):
             # tie score
-            tieScore: str
-            match self.player1Score:
-                case 0:
-                    tieScore = "Love-All"
-                case 1:
-                    tieScore = "Fifteen-All"
-                case 2:
-                    tieScore = "Thirty-All"
-                case _:
-                    tieScore = "Deuce"
+            tieScore = self.Tie_Score()
 
             result = tieScore
+
         elif (self.player1Score >= 4 or self.player2Score >= 4):
             # end-game score
-            endGameScore: str
-
-            if (self.player1Score - self.player2Score == 1):
-                endGameScore = "Advantage " + self.player1Name
-            elif (self.player1Score - self.player2Score == -1):
-                endGameScore = "Advantage " + self.player2Name
-            elif (self.player1Score - self.player2Score >= 2):
-                endGameScore = "Win for " + self.player1Name
-            else:
-                endGameScore = "Win for " + self.player2Name
+            endGameScore = self.EndGame_score()
 
             result = endGameScore
+
         else:
             # regular score
-            regularScore: str
 
-            match (self.player1Score):
-                case 0:
-                    score1 = "Love"
-                case 1:
-                    score1 = "Fifteen"
-                case 2:
-                    score1 = "Thirty"
-                case _:
-                    score1 = "Forty"
-
-            match (self.player2Score):
-                case 0:
-                    score2 = "Love"
-                case 1:
-                    score2 = "Fifteen"
-                case 2:
-                    score2 = "Thirty"
-                case _:
-                    score2 = "Forty"
-
-            regularScore = score1 + "-" + score2
+            regularScore = self.Regular_score()
 
             result = regularScore
 
         return result
+
+    def Regular_score(self):
+        regularScore: str
+        match (self.player1Score):
+            case 0:
+                score1 = "Love"
+            case 1:
+                score1 = "Fifteen"
+            case 2:
+                score1 = "Thirty"
+            case _:
+                score1 = "Forty"
+        match (self.player2Score):
+            case 0:
+                score2 = "Love"
+            case 1:
+                score2 = "Fifteen"
+            case 2:
+                score2 = "Thirty"
+            case _:
+                score2 = "Forty"
+        regularScore = score1 + "-" + score2
+        return regularScore
+
+    def EndGame_score(self):
+        endGameScore: str
+        if (self.player1Score - self.player2Score == 1):
+            endGameScore = "Advantage " + self.player1Name
+        elif (self.player1Score - self.player2Score == -1):
+            endGameScore = "Advantage " + self.player2Name
+        elif (self.player1Score - self.player2Score >= 2):
+            endGameScore = "Win for " + self.player1Name
+        else:
+            endGameScore = "Win for " + self.player2Name
+        return endGameScore
+
+    def Tie_Score(self):
+        tieScore: str
+        match self.player1Score:
+            case 0:
+                tieScore = "Love-All"
+            case 1:
+                tieScore = "Fifteen-All"
+            case 2:
+                tieScore = "Thirty-All"
+            case _:
+                tieScore = "Deuce"
+        return tieScore
